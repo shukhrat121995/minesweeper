@@ -8,7 +8,7 @@ class Game:
         self.screen_size = screen_size
 
     def run(self):
-        """Initialize the pygame, grab the screensize and run while event is not quite"""
+        """Initialize the pygame, grab the screensize and run while event is not QUIT"""
         pygame.init()
         screen = pygame.display.set_mode(self.screen_size)
         running = True
