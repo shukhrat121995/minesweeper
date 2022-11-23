@@ -16,3 +16,9 @@ pip install -r requirements.txt
 ```
 Or if you are using ```pipenv``` you can just run with 
 ```pipenv install -r requirements.txt```
+
+Then you can simply run the project by executing
+the following command:
+```
+python main.py
+```
