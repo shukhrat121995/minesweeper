@@ -60,3 +60,14 @@ class Piece:
         Simple get method for returning flagged boolean value
         """
         return self.flagged
+
+    def toggle_flag(self):
+        """
+        Just switch the state of flagged variable
+        """
+        self.flagged = not self.flagged
+
+    def click(self):
+        """
+        Handle user's left click
+        """

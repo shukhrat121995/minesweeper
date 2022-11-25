@@ -25,6 +25,10 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    position = pygame.mouse.get_pos()
+                    right_click = pygame.mouse.get_pressed()[2]
+                    self.handle_click(position, right_click)
             self.draw()
             pygame.display.flip()
         pygame.quit()
@@ -52,5 +56,17 @@ class Game:
         """
         Return empty block or unclicked-bomb images based on piece.get_has_bomb() value
         """
-        image_title = "unclicked-bomb" if piece.get_has_bomb() else str(piece.get_number_around())
+        image_title = None
+        if piece.get_clicked():
+            pass
+        else:
+            image_title = "flag" if piece.get_flagged() else "empty-block"
         return self.images[image_title]
+
+    def handle_click(self, position, right_click):
+        """
+        Handle user's clicks on the board
+        """
+        index = position[1] // self.piece_size[1], position[0] // self.piece_size[0]
+        piece = self.board.get_piece(index[0], index[1])
+        self.board.handle_click(piece, right_click)

@@ -12,7 +12,11 @@ class Board:
         self.size = size
         self.probability = probability
         self.board = []
+        self.lost = False
+        self.number_of_clicks = 0
+        self.number_of_non_bombs = 0
         self.set_board()
+
 
     def set_board(self):
         """
@@ -24,6 +28,8 @@ class Board:
                 # random function just returns floating number between 0 and 1
                 # so that your probability variable should not be below 0 and above 1
                 has_bomb = random() < self.probability
+                if not has_bomb:
+                    self.number_of_non_bombs += 1
                 piece = Piece(has_bomb=has_bomb)
                 row.append(piece)
             self.board.append(row)
@@ -68,3 +74,35 @@ class Board:
         Return individual piece based on the row and col values
         """
         return self.board[row][col]
+
+    def handle_click(self, piece, flag):
+        """
+        Check whether the piece already clicked or flagged
+        """
+        if piece.get_clicked() or (not flag and piece.get_flagged()):
+            return
+        if flag:
+            piece.toggle_flag()
+            return
+        piece.click()
+        if piece.get_has_bomb():
+            self.lost = True
+            return
+
+        self.number_of_clicks += 1
+
+    def get_lost(self):
+        """
+        Just return the lost state of variable
+        """
+        return self.lost
+
+    def get_won(self):
+        """
+        Return True if the number of non bombs is equal to the
+        number of user's clicks
+        """
+        return self.number_of_non_bombs == self.number_of_clicks
+
+
+
