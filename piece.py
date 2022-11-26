@@ -71,3 +71,4 @@ class Piece:
         """
         Handle user's left click
         """
+        self.clicked = True

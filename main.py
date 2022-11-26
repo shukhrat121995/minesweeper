@@ -1,9 +1,9 @@
 import game
 import board
 
-size = (9, 9)
+size = (12, 7)
 probability = 0.5
 board = board.Board(size=size, probability=probability)
-screen_size = (800, 800)
+screen_size = (size[1]*100, size[0]*100)
 game = game.Game(board, screen_size)
 game.run()

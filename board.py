@@ -91,6 +91,15 @@ class Board:
 
         self.number_of_clicks += 1
 
+        if piece.get_number_around() != 0:
+            # As we are calling this function recursively we need a termination
+            # condition. When there are no more bombs to explore just return
+            return
+
+        for neighbour in piece.get_neighbours():
+            if not neighbour.get_has_bomb() and not neighbour.get_cliked():
+                self.handle_click(neighbour, False)
+
     def get_lost(self):
         """
         Just return the lost state of variable

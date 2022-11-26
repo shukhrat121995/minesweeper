@@ -27,7 +27,7 @@ class Game:
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
-                    right_click = pygame.mouse.get_pressed()[2]
+                    right_click = pygame.mouse.get_pressed(num_buttons=3)[2]
                     self.handle_click(position, right_click)
             self.draw()
             pygame.display.flip()
@@ -58,7 +58,7 @@ class Game:
         """
         image_title = None
         if piece.get_clicked():
-            pass
+            image_title = "bomb-at-clicked-block" if piece.get_has_bomb() else str(piece.get_number_around())
         else:
             image_title = "flag" if piece.get_flagged() else "empty-block"
         return self.images[image_title]
