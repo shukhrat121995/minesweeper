@@ -85,6 +85,10 @@ class Game:
         self.board.handle_click(piece, right_click)
 
     def play_sound(self, file_name):
+        """
+        Play sound that is passed as a filename to this function, sleep 3 seconds so
+        that user can hear the sound and then show pop-up modal
+        """
         sound = pygame.mixer.Sound(f"audio/{file_name}")
         sound.play()
         sleep(3)

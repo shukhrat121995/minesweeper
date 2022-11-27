@@ -14,4 +14,3 @@ while pyautogui.confirm('Play again?') == 'OK':
     new_board = board.Board(size=size, probability=probability)
     new_game = game.Game(new_board, screen_size)
     new_game.run()
-

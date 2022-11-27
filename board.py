@@ -17,7 +17,6 @@ class Board:
         self.number_of_non_bombs = 0
         self.set_board()
 
-
     def set_board(self):
         """
         Create a board based on the size value
