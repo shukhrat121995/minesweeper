@@ -1,5 +1,7 @@
 import os
 import pygame
+from time import sleep
+import pyautogui
 
 
 class Game:
@@ -31,7 +33,15 @@ class Game:
                     self.handle_click(position, right_click)
             self.draw()
             pygame.display.flip()
-        pygame.quit()
+
+            if self.board.get_won():
+                self.play_sound('Minesweeper_win.wav')
+                pyautogui.alert('You have won!')
+                running = False
+            elif self.board.get_lost():
+                self.play_sound('bomb-effect.wav')
+                pyautogui.alert('You have lost!')
+                running = False
 
     def draw(self):
         """Draw the initial board"""
@@ -67,6 +77,14 @@ class Game:
         """
         Handle user's clicks on the board
         """
+        if self.board.get_lost():
+            self.play_sound('bomb-effect.wav')
+            return
         index = position[1] // self.piece_size[1], position[0] // self.piece_size[0]
         piece = self.board.get_piece(index[0], index[1])
         self.board.handle_click(piece, right_click)
+
+    def play_sound(self, file_name):
+        sound = pygame.mixer.Sound(f"audio/{file_name}")
+        sound.play()
+        sleep(3)

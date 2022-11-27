@@ -97,7 +97,7 @@ class Board:
             return
 
         for neighbour in piece.get_neighbours():
-            if not neighbour.get_has_bomb() and not neighbour.get_cliked():
+            if not neighbour.get_has_bomb() and not neighbour.get_clicked():
                 self.handle_click(neighbour, False)
 
     def get_lost(self):
