@@ -10,7 +10,10 @@ initial_board = board.Board(size=size, probability=probability)
 initial_game = game.Game(initial_board, screen_size)
 initial_game.run()
 
-while pyautogui.confirm('Play again?') == 'OK':
-    new_board = board.Board(size=size, probability=probability)
-    new_game = game.Game(new_board, screen_size)
-    new_game.run()
+if initial_game.play_again:
+    play_again = True
+    while play_again and pyautogui.confirm('Play again?') == 'OK':
+        new_board = board.Board(size=size, probability=probability)
+        new_game = game.Game(new_board, screen_size)
+        new_game.run()
+        play_again = new_game.play_again

@@ -17,6 +17,7 @@ class Game:
                           self.screen_size[1] // self.board.get_size()[0]
         self.images = {}
         self.load_images()
+        self.play_again = True
 
     def run(self):
         """Initialize the pygame, grab the screensize and run while event is not QUIT"""
@@ -27,6 +28,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    self.play_again = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
                     right_click = pygame.mouse.get_pressed(num_buttons=3)[2]
@@ -34,14 +36,14 @@ class Game:
             self.draw()
             pygame.display.flip()
 
-            if self.board.get_won():
-                self.play_sound('Minesweeper_win.wav')
-                pyautogui.alert('You have won!')
+            if self.board.get_won() or self.board.get_lost():
                 running = False
-            elif self.board.get_lost():
-                self.play_sound('bomb-effect.wav')
-                pyautogui.alert('You have lost!')
-                running = False
+        if self.board.get_won():
+            self.play_sound('Minesweeper_win.wav')
+            pyautogui.alert('You have won!')
+        elif self.board.get_lost():
+            self.play_sound('bomb-effect.wav')
+            pyautogui.alert('You have lost!')
 
     def draw(self):
         """Draw the initial board"""
