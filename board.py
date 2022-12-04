@@ -11,6 +11,7 @@ class Board:
         """Constructor of the Board class"""
         self.size = size
         self.probability = probability
+        # board contains multiple pieces, which can be access by row and col
         self.board = []
         self.lost = False
         self.number_of_clicks = 0
@@ -111,6 +112,3 @@ class Board:
         number of user's clicks
         """
         return self.number_of_non_bombs == self.number_of_clicks
-
-
-

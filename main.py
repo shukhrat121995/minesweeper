@@ -1,43 +1,51 @@
-import game
-import board
-from input import user_input
+import pygame
+from game import Game
+from board import Board
+from constants import PROBABILITY, NEW_GAME, SHOW_STATS, QUIT_GAME, WELCOME_MESSAGE
+from input import user_input_rows_and_cols, user_input_option
 import pyautogui
 
-print("* * * Welcome to the MINESWEEPER game * * *")
-rows = user_input("Please, enter the number of rows of the board")
-cols = user_input("Please, enter the number of columns of the board")
 
-"""
-Main menu:
-------------------- New Game -----------------------
-------------------- Statistics -----------------------
-------------------- Quit -----------------------
-"""
+def new_game():
+    rows = user_input_rows_and_cols("Please, enter the number of rows of the board")
+    cols = user_input_rows_and_cols("Please, enter the number of columns of the board")
+    size = (rows, cols)
+    screen_size = (size[1] * 100, size[0] * 100)  # properly calculate pixels
+    gui_confirm = 'OK'
 
-size = (rows, cols)
-probability = 0.1
-screen_size = (size[1]*100, size[0]*100)
-initial_board = board.Board(size=size, probability=probability)
-initial_game = game.Game(initial_board, screen_size)
-initial_game.run()
+    def close_pygame_ui():
+        pygame.display.quit()
+        pygame.quit()
 
-if initial_game.play_again:
-    play_again = True
-    while play_again and pyautogui.confirm('Play again?') == 'OK':
-        new_board = board.Board(size=size, probability=probability)
-        new_game = game.Game(new_board, screen_size)
-        new_game.run()
-        play_again = new_game.play_again
+    while gui_confirm == 'OK':
+        board = Board(size=size, probability=PROBABILITY)
+        game = Game(board, screen_size)
+        game.run()
+        if game.quit:
+            close_pygame_ui()
+            break
+        gui_confirm = pyautogui.confirm('Play again?')
+        if gui_confirm == "Cancel":
+            close_pygame_ui()
+            break
 
 
-def user_input(message):
-    while True:
-        try:
-            number = int(input(f'{message} : '))
-            if number <= 0:
-                print('Please, enter an integer value greater than zero')
-                continue
-            return number
-        except ValueError:
-            print('You entered a non integer value, try again.')
-            continue
+def show_stats():
+    pass
+
+
+print(WELCOME_MESSAGE)
+
+while True:
+    print("Please choose from the following options down below: ")
+    option = user_input_option("Press << 1 >> to start a new game, press << 2 >> to "
+                               "display stats and press << 3 >> to quit the game")
+
+    if option == NEW_GAME:
+        new_game()
+    elif option == SHOW_STATS:
+        pass
+    elif option == QUIT_GAME:
+        print("Thanks for playing! Good bye :)")
+        break
+

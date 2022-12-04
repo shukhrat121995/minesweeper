@@ -6,6 +6,7 @@ import pyautogui
 
 class Game:
     """Initialize the game constructor"""
+
     def __init__(self, board, screen_size):
         """
         Constructor for the Game class
@@ -17,7 +18,7 @@ class Game:
                           self.screen_size[1] // self.board.get_size()[0]
         self.images = {}
         self.load_images()
-        self.play_again = True
+        self.quit = False
 
     def run(self):
         """Initialize the pygame, grab the screensize and run while event is not QUIT"""
@@ -28,7 +29,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                    self.play_again = False
+                    self.quit = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
                     right_click = pygame.mouse.get_pressed(num_buttons=3)[2]
@@ -68,9 +69,9 @@ class Game:
         """
         Return empty block or unclicked-bomb images based on piece.get_has_bomb() value
         """
-        image_title = None
         if piece.get_clicked():
-            image_title = "bomb-at-clicked-block" if piece.get_has_bomb() else str(piece.get_number_around())
+            image_title = "bomb-at-clicked-block" if piece.get_has_bomb() else str(
+                piece.get_number_around())
         else:
             image_title = "flag" if piece.get_flagged() else "empty-block"
         return self.images[image_title]
