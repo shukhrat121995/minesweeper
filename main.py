@@ -48,4 +48,3 @@ while True:
     elif option == QUIT_GAME:
         print("Thanks for playing! Good bye :)")
         break
-
