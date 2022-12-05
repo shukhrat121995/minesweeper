@@ -37,6 +37,10 @@ def store_values(played_time, duration, turns, bombs_left, game):
 
 
 def retrieve_values():
+    """
+    Retrieve values from the << stats >> table; return empty list if there are no
+    values
+    """
     connection = create_connection('db.db')
     cursor = connection.cursor()
     try:
