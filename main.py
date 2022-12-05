@@ -10,6 +10,9 @@ from database import retrieve_values
 
 
 def new_game():
+    """
+    Start a new game for a user
+    """
     rows = user_input_rows_and_cols("Please, enter the number of rows of the board")
     cols = user_input_rows_and_cols("Please, enter the number of columns of the board")
     size = (rows, cols)
@@ -17,6 +20,9 @@ def new_game():
     gui_confirm = 'OK'
 
     def close_pygame_ui():
+        """
+        Inner function for closing pygame UI
+        """
         pygame.display.quit()
         pygame.quit()
 

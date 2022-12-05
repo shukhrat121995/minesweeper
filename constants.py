@@ -1,6 +1,8 @@
 """
 Game constants that should not be defined by the user
 """
+
+
 PROBABILITY = 0.1
 
 NEW_GAME = 1
