@@ -112,3 +112,10 @@ class Board:
         number of user's clicks
         """
         return self.number_of_non_bombs == self.number_of_clicks
+
+    def get_number_of_bombs(self):
+        """
+        Return the number of boards on the board based on the board size and
+        total number of non bombs
+        """
+        return self.size[0]*self.size[1] - self.number_of_non_bombs

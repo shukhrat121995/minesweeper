@@ -1,7 +1,9 @@
 import os
 import pygame
 from time import sleep
+from database import store_values
 import pyautogui
+import time
 
 
 class Game:
@@ -20,11 +22,14 @@ class Game:
         self.load_images()
         self.quit = False
 
+
     def run(self):
         """Initialize the pygame, grab the screensize and run while event is not QUIT"""
         pygame.init()
         self.screen = pygame.display.set_mode(self.screen_size)
         running = True
+        start_time = time.time()
+        turns = []
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -33,6 +38,7 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
                     right_click = pygame.mouse.get_pressed(num_buttons=3)[2]
+                    turns.append(self.get_index(position))
                     self.handle_click(position, right_click)
             self.draw()
             pygame.display.flip()
@@ -45,6 +51,16 @@ class Game:
         elif self.board.get_lost():
             self.play_sound('bomb-effect.wav')
             pyautogui.alert('You have lost!')
+
+        elapsed_time = time.time() - start_time
+        result = 'WON' if self.board.get_won() else 'LOST'
+        store_values(
+            time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+            time.strftime("%H:%M:%S", time.gmtime(elapsed_time)),
+            turns,
+            self.board.get_number_of_bombs(),
+            result
+        )
 
     def draw(self):
         """Draw the initial board"""
@@ -83,9 +99,13 @@ class Game:
         if self.board.get_lost():
             self.play_sound('bomb-effect.wav')
             return
-        index = position[1] // self.piece_size[1], position[0] // self.piece_size[0]
+        index = self.get_index(position)
         piece = self.board.get_piece(index[0], index[1])
         self.board.handle_click(piece, right_click)
+
+    def get_index(self, position):
+        index = position[1] // self.piece_size[1], position[0] // self.piece_size[0]
+        return index
 
     def play_sound(self, file_name):
         """

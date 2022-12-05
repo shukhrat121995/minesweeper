@@ -1,9 +1,12 @@
 import pygame
 from game import Game
 from board import Board
-from constants import PROBABILITY, NEW_GAME, SHOW_STATS, QUIT_GAME, WELCOME_MESSAGE
+from constants import (
+    PROBABILITY, NEW_GAME, SHOW_STATS, QUIT_GAME, WELCOME_MESSAGE, NO_RECORDS
+)
 from input import user_input_rows_and_cols, user_input_option
 import pyautogui
+from database import retrieve_values
 
 
 def new_game():
@@ -31,7 +34,21 @@ def new_game():
 
 
 def show_stats():
-    pass
+    """
+    Show user's stats in the terminal by printing the data values
+    """
+    data = retrieve_values()
+    if len(data) == 0:
+        print(NO_RECORDS)
+        return
+
+    for row in data:
+        print(f'PLAYED TIME: {row[0]}')
+        print(f'DURATION: {row[1]}')
+        print(f'TURNS: {row[2]}')
+        print(f'MINES: {row[3]}')
+        print(f'GAME: {row[4]}')
+        print('-----------------------------------------')
 
 
 print(WELCOME_MESSAGE)
@@ -44,7 +61,7 @@ while True:
     if option == NEW_GAME:
         new_game()
     elif option == SHOW_STATS:
-        pass
+        show_stats()
     elif option == QUIT_GAME:
         print("Thanks for playing! Good bye :)")
         break
