@@ -8,7 +8,6 @@ import time
 
 class Game:
     """Initialize the game constructor"""
-
     def __init__(self, board, screen_size):
         """
         Constructor for the Game class
@@ -21,7 +20,6 @@ class Game:
         self.images = {}
         self.load_images()
         self.quit = False
-
 
     def run(self):
         """Initialize the pygame, grab the screensize and run while event is not QUIT"""
@@ -55,11 +53,11 @@ class Game:
         elapsed_time = time.time() - start_time
         result = 'WON' if self.board.get_won() else 'LOST'
         store_values(
-            time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
-            time.strftime("%H:%M:%S", time.gmtime(elapsed_time)),
-            turns,
-            self.board.get_number_of_bombs(),
-            result
+            played_time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+            duration=time.strftime("%H:%M:%S", time.gmtime(elapsed_time)),
+            turns=turns,
+            bombs=self.board.get_number_of_bombs(),
+            game=result
         )
 
     def draw(self):

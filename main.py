@@ -52,7 +52,7 @@ def show_stats():
         print(f'PLAYED TIME: {row[0]}')
         print(f'DURATION: {row[1]}')
         print(f'TURNS: {row[2]}')
-        print(f'MINES: {row[3]}')
+        print(f'BOMBS: {row[3]}')
         print(f'GAME: {row[4]}')
         print('-----------------------------------------')
 

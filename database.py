@@ -14,7 +14,7 @@ def create_connection(db_file):
         print(e)
 
 
-def store_values(played_time, duration, turns, bombs_left, game):
+def store_values(played_time, duration, turns, bombs, game):
     """
     Store passed values in the stats table
     """
@@ -31,7 +31,7 @@ def store_values(played_time, duration, turns, bombs_left, game):
                    f"'{played_time}', "
                    f"'{duration}', "
                    f"'{turns}', "
-                   f"{bombs_left}, "
+                   f"{bombs}, "
                    f"'{game}')")
     cursor.close()
 
